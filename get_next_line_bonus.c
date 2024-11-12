@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsadikaj <lsadikaj@student.42lausanne.ch > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 09:38:20 by lsadikaj          #+#    #+#             */
-/*   Updated: 2024/11/11 15:56:54 by lsadikaj         ###   ########.fr       */
+/*   Created: 2024/11/11 13:37:53 by lsadikaj          #+#    #+#             */
+/*   Updated: 2024/11/11 14:05:49 by lsadikaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static char	*fill_line_buffer(int fd, char *left_c, char *buffer)
 	while (b_read > 0)
 	{
 		b_read = read(fd, buffer, BUFFER_SIZE);
-		if (b_read == -1)
+		if (b_read == 1)
 		{
 			free(left_c);
-			return (NULL);
+			return (0);
 		}
 		else if (b_read == 0)
 			break ;
@@ -33,10 +33,10 @@ static char	*fill_line_buffer(int fd, char *left_c, char *buffer)
 			left_c = ft_strdup("");
 		temp = left_c;
 		left_c = ft_strjoin(temp, buffer);
-		free (temp);
+		free(temp);
 		temp = NULL;
 		if (ft_strchr(buffer, '\n'))
-			break ;
+			break;
 	}
 	return (left_c);
 }
@@ -50,8 +50,8 @@ static char	*set_line(char *line_buffer)
 	while (line_buffer[i] != '\n' && line_buffer[i] != '\0')
 		i++;
 	if (line_buffer[i] == 0 || line_buffer[1] == 0)
-		return (NULL);
-	left_c = ft_substr(line_buffer, i + 1, ft_strlen(line_buffer) - 1);
+		return (0);
+	left_c = ft_substr(line_buffer, i + 1, ft_strlen(line_buffer) - i);
 	if (*left_c == 0)
 	{
 		free(left_c);
@@ -65,6 +65,7 @@ static char	*ft_strchr(char *s, int c)
 {
 	unsigned int	i;
 	char			cc;
+
 	cc = (char) c;
 	i = 0;
 	while (s[i])
@@ -80,25 +81,26 @@ static char	*ft_strchr(char *s, int c)
 
 char	*get_next_line(int fd)
 {
-	static char	*left_c;
+	static char	*[MAX_FD];
 	char		*line;
 	char		*buffer;
 
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		free(left_c);
+		free(left_c[fd]);
 		free(buffer);
-		left_c = NULL;
+		left_c[fd] = NULL;
 		buffer = NULL;
-		return (NULL);
+		return (0);
 	}
 	if (!buffer)
 		return (NULL);
-	line = fill_line_buffer(fd, left_c, buffer);
+	line = fill_line_buffer(fd, left_c[fd], buffer);
 	free(buffer);
+	buffer = NULL;
 	if (!line)
 		return (NULL);
-	left_c = set_line(line);
+	left_c[fd] = set_line(line);
 	return (line);
 }
