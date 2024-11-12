@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lsadikaj <lsadikaj@student.42lausanne.ch > +#+  +:+       +#+         #
+#    By: lsadikaj <lsadikaj@student.42lausanne.ch>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/08 09:40:46 by lsadikaj          #+#    #+#              #
-#    Updated: 2024/11/11 15:12:04 by lsadikaj         ###   ########.fr        #
+#    Updated: 2024/11/12 13:50:18 by lsadikaj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,21 +17,17 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 SRCS = get_next_line.c get_next_line_utils.c
-OBJS = $(SRCS:.c=.0)
+OBJS = $(SRCS:.c=.o)
 
 BONUS_SRCS = get_next_line_bonus.c get_next_line_utils_bonus.c
-BONUS_OBJS = $(BONNUS_SRCS:.c=.o)
+BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
-all: $(NAME)
-
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+all: $(OBJS)
 
 bonus: $(BONUS_OBJS)
-	$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -C $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJS) $(BONUS_OBJS)

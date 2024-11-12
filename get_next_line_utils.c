@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsadikaj <lsadikaj@student.42lausanne.ch > +#+  +:+       +#+        */
+/*   By: lsadikaj <lsadikaj@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:38:10 by lsadikaj          #+#    #+#             */
-/*   Updated: 2024/11/11 14:05:41 by lsadikaj         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:17:07 by lsadikaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strdup(char *s1)
 	char			*dest;
 	unsigned int	i;
 
-	dest = (char *)malloc(sizeof(char) * ft_strlen(s1) + 1);
+	dest = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
 	if (!dest)
 		return (NULL);
 	i = 0;
@@ -26,7 +26,7 @@ char	*ft_strdup(char *s1)
 		dest[i] = s1[i];
 		i++;
 	}
-	dest[i] = 0;
+	dest[i] = '\0';
 	return (dest);
 }
 
@@ -66,20 +66,13 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	char	*res;
+	char			*res;
+	unsigned int	i;
+	unsigned int	j;
 
 	res = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!res)
 		return (NULL);
-	fill_str(res, s1, s2);
-	return (res);
-}
-
-void	fill_str(char *res, char *s1, char *s2)
-{
-	unsigned int	i;
-	unsigned int	j;
-
 	i = 0;
 	j = 0;
 	while (s1[j])
@@ -88,4 +81,23 @@ void	fill_str(char *res, char *s1, char *s2)
 	while (s2[j])
 		res[i++] = s2[j++];
 	res[i] = '\0';
+	return (res);
+}
+
+char	*ft_strchr(char *s, int c)
+{
+	unsigned int	i;
+	char			cc;
+
+	cc = (char)c;
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == cc)
+			return ((char *)&s[i]);
+		i++;
+	}
+	if (s[i] == cc)
+		return ((char *)&s[i]);
+	return (NULL);
 }

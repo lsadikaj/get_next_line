@@ -3,32 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsadikaj <lsadikaj@student.42lausanne.ch > +#+  +:+       +#+        */
+/*   By: lsadikaj <lsadikaj@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 13:37:53 by lsadikaj          #+#    #+#             */
-/*   Updated: 2024/11/11 14:05:49 by lsadikaj         ###   ########.fr       */
+/*   Updated: 2024/11/12 14:01:19 by lsadikaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
+
+static char	*ft_strchr(char *s, int c);
 
 static char	*fill_line_buffer(int fd, char *left_c, char *buffer)
 {
-	ssize_t	b_read;
+	ssize_t	bytes_read;
 	char	*temp;
 
-	b_read = 1;
-	while (b_read > 0)
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	if (bytes_read == -1)
 	{
-		b_read = read(fd, buffer, BUFFER_SIZE);
-		if (b_read == 1)
-		{
-			free(left_c);
-			return (0);
-		}
-		else if (b_read == 0)
-			break ;
-		buffer[b_read] = 0;
+		free(left_c);
+		return (NULL);
+	}
+	while (bytes_read > 0)
+	{
+		buffer[bytes_read] = '\0';
 		if (!left_c)
 			left_c = ft_strdup("");
 		temp = left_c;
@@ -36,7 +35,8 @@ static char	*fill_line_buffer(int fd, char *left_c, char *buffer)
 		free(temp);
 		temp = NULL;
 		if (ft_strchr(buffer, '\n'))
-			break;
+			break ;
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
 	return (left_c);
 }
@@ -49,15 +49,15 @@ static char	*set_line(char *line_buffer)
 	i = 0;
 	while (line_buffer[i] != '\n' && line_buffer[i] != '\0')
 		i++;
-	if (line_buffer[i] == 0 || line_buffer[1] == 0)
-		return (0);
+	if (line_buffer[i] == '\0')
+		return (NULL);
 	left_c = ft_substr(line_buffer, i + 1, ft_strlen(line_buffer) - i);
-	if (*left_c == 0)
+	if (*left_c == '\0')
 	{
 		free(left_c);
 		left_c = NULL;
 	}
-	line_buffer[i + 1] = 0;
+	line_buffer[i + 1] = '\0';
 	return (left_c);
 }
 
@@ -71,24 +71,25 @@ static char	*ft_strchr(char *s, int c)
 	while (s[i])
 	{
 		if (s[i] == cc)
-			return ((char *) &s[i]);
+			return ((char *)&s[i]);
 		i++;
 	}
 	if (s[i] == cc)
-		return ((char *) &s[i]);
+		return ((char *)&s[i]);
 	return (NULL);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*[MAX_FD];
+	static char	*left_c[MAX_FD];
 	char		*line;
 	char		*buffer;
 
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || fd > MAX_FD || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		free(left_c[fd]);
+		if (left_c[fd])
+			free(left_c[fd]);
 		free(buffer);
 		left_c[fd] = NULL;
 		buffer = NULL;
@@ -102,5 +103,7 @@ char	*get_next_line(int fd)
 	if (!line)
 		return (NULL);
 	left_c[fd] = set_line(line);
+	if (!left_c[fd])
+		free(left_c[fd]);
 	return (line);
 }
