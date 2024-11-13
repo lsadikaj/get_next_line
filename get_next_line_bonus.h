@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsadikaj <lsadikaj@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: lsadikaj <lsadikaj@student.42lausanne.ch > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:56:18 by lsadikaj          #+#    #+#             */
-/*   Updated: 2024/11/12 13:51:12 by lsadikaj         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:43:13 by lsadikaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,19 @@
 # include <unistd.h>
 # include <fcntl.h>
 
+typedef struct s_fd_list
+{
+	int					fd;
+	char				*left_c;
+	struct s_fd_list	*next;
+}	t_fd_list;
+
 char	*get_next_line(int fd);
 
 char	*ft_strdup(char *s);
 size_t	ft_strlen(char *s);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 char	*ft_strjoin(char *s1, char *s2);
-void	fill_str(char *res, char *s1, char *s2);
+char	*ft_strchr(const char *s, int c);
 
 #endif
