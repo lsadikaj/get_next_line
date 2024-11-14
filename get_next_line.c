@@ -6,7 +6,7 @@
 /*   By: lsadikaj <lsadikaj@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:38:20 by lsadikaj          #+#    #+#             */
-/*   Updated: 2024/11/12 15:16:38 by lsadikaj         ###   ########.fr       */
+/*   Updated: 2024/11/14 11:02:05 by lsadikaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		free(left_c);
+		if (left_c)
+			free(left_c);
 		left_c = NULL;
 		return (NULL);
 	}
