@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsadikaj <lsadikaj@student.42lausanne.ch > +#+  +:+       +#+        */
+/*   By: lsadikaj <lsadikaj@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:56:18 by lsadikaj          #+#    #+#             */
-/*   Updated: 2024/11/13 11:43:13 by lsadikaj         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:56:34 by lsadikaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 15
 # endif
-
-# define MAX_FD 10240
 
 # include <stdlib.h>
 # include <unistd.h>
