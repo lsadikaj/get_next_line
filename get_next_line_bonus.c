@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsadikaj <lsadikaj@student.42lausanne.ch > +#+  +:+       +#+        */
+/*   By: lsadikaj <lsadikaj@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 13:37:53 by lsadikaj          #+#    #+#             */
-/*   Updated: 2024/11/13 17:34:37 by lsadikaj         ###   ########.fr       */
+/*   Updated: 2024/11/19 11:42:00 by lsadikaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int	read_and_store(int fd, char **left_c)
 			return (-1);
 		buffer[bytes_read] = '\0';
 		temp = *left_c;
-		*left_c = ft_strjoin(*left_c, buffer);
+		*left_c = ft_strjoin(temp, buffer);
 		free(temp);
 		if (!*left_c)
 			return (-1);
