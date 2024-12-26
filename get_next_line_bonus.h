@@ -6,7 +6,7 @@
 /*   By: lsadikaj <lsadikaj@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:56:18 by lsadikaj          #+#    #+#             */
-/*   Updated: 2024/11/19 13:56:34 by lsadikaj         ###   ########.fr       */
+/*   Updated: 2024/12/26 12:37:54 by lsadikaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include "../libft/libft.h"
 
 typedef struct s_fd_list
 {
@@ -29,11 +30,5 @@ typedef struct s_fd_list
 }	t_fd_list;
 
 char	*get_next_line(int fd);
-
-char	*ft_strdup(char *s);
-size_t	ft_strlen(char *s);
-char	*ft_substr(char *s, unsigned int start, size_t len);
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_strchr(const char *s, int c);
 
 #endif
